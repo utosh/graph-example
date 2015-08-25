@@ -1,0 +1,133 @@
+<html>
+<head>
+
+<style type="text/css">
+.w {
+    position: relative;
+    height: 400px;
+    width: 400px;
+    float: left;
+}
+.w * {
+    position: absolute;
+}
+
+.d1 {
+    top: 0px;
+    left: 0px;
+}
+.d2, .d3, .center {
+    border-radius: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.center {
+    font-size: 250%;
+    width: 250px;
+    height: 250px;
+    line-height: 250px;
+    text-align: center;
+    background-color: #444;
+    color: white;
+}
+</style>
+
+</head>
+<body>
+
+<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="./node_modules/chart.js/Chart.min.js"></script>
+
+<script type="text/javascript">
+
+var doughnutData = [{
+    value: 100,
+    color: "#F7464A",
+}
+];
+
+var doughnutData2 = [{
+    value: 25,
+    color: "pink",
+}, {
+    value: 25,
+    color: "lightgray",
+}, {
+    value: 25,
+    color: "pink",
+}, {
+    value: 25,
+    color: "#5AD3D1",
+}
+];
+
+var doughnutData3 = [{
+    value: 10,
+    color: "pink",
+}, {
+    value: 10,
+    color: "pink",
+}, {
+    value: 10,
+    color: "pink",
+}, {
+    value: 10,
+    color: "pink",
+}, {
+    value: 10,
+    color: "lightgray",
+}, {
+    value: 10,
+    color: "lightgray",
+}, {
+    value: 10,
+    color: "pink",
+}, {
+    value: 10,
+    color: "pink",
+}, {
+    value: 10,
+    color: "#FFC870",
+    label: "Grey"
+}, {
+    value: 10,
+    color: "#FFC870",
+}
+
+];
+
+for (var i = 1; i <= 100; i++) {
+    $("body").append(
+        '<div class="w">' +
+        '    <canvas class="d1" id="d' + String(i) + '-1" height="400" width="400"></canvas>' +
+        '    <canvas class="d2" id="d' + String(i) + '-2" height="320" width="320"></canvas>' +
+        '    <canvas class="d3" id="d' + String(i) + '-3" height="285" width="285"></canvas>' +
+        '    <div class="center" id="center' + String(i) + '">' + String(i) + ',000yen</div>' +
+        '</div>'
+    );
+
+    var ctx1 = $("#d" + String(i) + "-1").get(0).getContext("2d");
+    var myChart1 = new Chart(ctx1).Doughnut(doughnutData, {
+        percentageInnerCutout: 80,
+        animation: false
+    });
+
+    var ctx2 = $("#d" + String(i) + "-2").get(0).getContext("2d");
+    var myChart2 = new Chart(ctx2).Doughnut(doughnutData2, {
+        percentageInnerCutout: 90,
+        animation: false
+    });
+
+
+    var ctx3 = $("#d" + String(i) + "-3").get(0).getContext("2d");
+    var myChart3 = new Chart(ctx3).Doughnut(doughnutData3, {
+        percentageInnerCutout: 90,
+        animation: false
+    });
+};
+
+</script>
+
+</body>
+</html>
