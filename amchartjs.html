@@ -1,0 +1,68 @@
+<html>
+<head>
+
+<style type="text/css">
+.chartdiv {
+  width: 30%;
+  height: 150px;
+  font-size: 11px;
+  float: left;
+  margin-right: 2em;
+}
+</style>
+
+</head>
+<body>
+
+<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+
+<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="http://www.amcharts.com/lib/3/pie.js"></script>
+<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+<script type="text/javascript">
+
+var chart;
+
+for (var i = 1; i <= 100; i++) {
+  $("body").append(
+    '<div class="chartdiv" id="chartdiv' + String(i) + '"></div>'
+  );
+
+  chart = AmCharts.makeChart( "chartdiv" + String(i), {
+    "type": "pie",
+    "theme": "light",
+    "dataProvider": [
+      {
+        "title": "New",
+        "value": Math.random() * 10000
+      }, {
+        "title": "Value1",
+        "value": Math.random() * 10000
+      }, {
+        "title": "Value2",
+        "value": Math.random() * 10000
+      }, {
+        "title": "Value3",
+        "value": Math.random() * 10000
+      }, {
+        "title": "Value4",
+        "value": Math.random() * 10000
+      }
+    ],
+    "titleField": "title",
+    "valueField": "value",
+    "labelRadius": 5,
+
+    "radius": "42%",
+    "innerRadius": "60%",
+    "labelText": "[[title]]",
+    "export": {
+      "enabled": true
+    }
+  } );
+};
+
+
+</script>
+</body>
+</html>
