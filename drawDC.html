@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>jquery.drawDoughnutChart.js</title>
+<link rel="stylesheet" href="./css/drawDC.css">
+</head>
+<body>
+
+<div class="wrapper">
+  <div id="doughnutChart" class="chart"></div>
+  <div id="doughnutChart2" class="chart"></div>
+  <div id="doughnutChart3" class="chart"></div>
+  <div id="center" class="center"></div>
+</div>
+
+<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./vendor/drawDoughnutChart/jquery.drawDoughnutChart.js"></script>
+
+<script>
+
+$(function(){
+  var values1 = [
+    { title: "Tokyo",         value: 100,  color: "#2C3E50" },
+    { title: "London",        value: 50,   color: "#F7E248" },
+    { title: "Sydney",        value: 40,   color: "#D7DADB" },
+    { title: "Berlin",        value: 20,   color: "#FFF" }
+  ];
+
+  var values2 = [
+    { title: "Tokyo",         value: 100,  color: "#2C3E50" },
+    { title: "Tokyo",         value: 100,  color: "#2C3E50" },
+    { title: "Tokyo",         value: 100,  color: "#2C3E50" },
+    { title: "San Francisco", value: 80,   color: "#FC4349" },
+    { title: "New York",      value: 70,   color: "#6DBCDB" },
+    { title: "London",        value: 50,   color: "#F7E248" },
+    { title: "Sydney",        value: 40,   color: "#D7DADB" },
+    { title: "Berlin",        value: 20,   color: "#FFF" },
+    { title: "Berlin",        value: 20,   color: "#FFF" },
+    { title: "Berlin",        value: 20,   color: "#FFF" },
+    { title: "Berlin",        value: 20,   color: "#FFF" },
+  ];
+
+  $("#doughnutChart").drawDoughnutChart([{value: 100, color: "pink"}], {
+    percentageInnerCutout: 80,
+    segmentShowStroke: false,
+    showTip: false,
+    animateRotate: true,
+    animationSteps: 35,
+  });
+
+  $("#doughnutChart2").drawDoughnutChart(values1, {
+    percentageInnerCutout: 90,
+    showTip: false,
+    animation: false
+  });
+
+  $("#doughnutChart3").drawDoughnutChart(values2, {
+    percentageInnerCutout: 90,
+    showTip: false,
+    animation: false
+  });
+});
+
+</script>
+
+</body>
+</html>
