@@ -7,6 +7,8 @@
   height: 400px;
   width: 400px;
   float: left;
+  margin-left: 1em;
+  margin-bottom: 1em;
 }
 .w * {
   position: absolute;
@@ -37,65 +39,131 @@
 <body>
 
 <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="./node_modules/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="./node_modules/chart.js/Chart.min.js"></script>
 
 <script type="text/javascript">
 
+var colors = {
+  b: ["#00B26F", "#58C999"],
+  y: ["#FFB23C", "#E7E8E8"],
+  r: ["#FD3B46", "#58C999"],
+}
+
 var doughnutData = [{
   value: 100,
-  color: "#F7464A",
+  color: "#FD3B46",
 }
 ];
 
 var doughnutData2 = [{
   value: 25,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 25,
-  color: "lightgray",
+  color: "#E7E8E8",
 }, {
   value: 25,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 25,
-  color: "#5AD3D1",
+  color: "#58C999",
 }
 ];
 
 var doughnutData3 = [{
   value: 10,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 10,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 10,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 10,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 10,
-  color: "lightgray",
+  color: "#E7E8E8",
 }, {
   value: 10,
-  color: "lightgray",
+  color: "#E7E8E8",
 }, {
   value: 10,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 10,
-  color: "pink",
+  color: "#FE787C",
 }, {
   value: 10,
-  color: "#FFC870",
-  label: "Grey"
+  color: "#E7E8E8",
 }, {
   value: 10,
-  color: "#FFC870",
+  color: "#FE787C",
 }
-
 ];
+
+var doughnutData_b = [{
+  value: 100,
+  color: "#00B26F",
+}
+];
+
+var doughnutData2_b = [{
+  value: 25,
+  color: "#FE787C",
+}, {
+  value: 25,
+  color: "#E7E8E8",
+}, {
+  value: 25,
+  color: "#58C999",
+}, {
+  value: 25,
+  color: "#58C999",
+}
+];
+
+var doughnutData3_b = [{
+  value: 10,
+  color: "#58C999",
+}, {
+  value: 10,
+  color: "#FE787C",
+}, {
+  value: 10,
+  color: "#58C999",
+}, {
+  value: 10,
+  color: "#58C999",
+}, {
+  value: 10,
+  color: "#E7E8E8",
+}, {
+  value: 10,
+  color: "#E7E8E8",
+}, {
+  value: 10,
+  color: "#58C999",
+}, {
+  value: 10,
+  color: "#58C999",
+}, {
+  value: 10,
+  color: "#E7E8E8",
+}, {
+  value: 10,
+  color: "#58C999",
+}
+];
+
+var doughnutData_y = [{
+  value: 100,
+  color: "#FFB23C",
+}
+];
+
 
 var ease_opts = [
   'linear',
@@ -111,37 +179,54 @@ var ease_opts = [
   'easeInBounce',   'easeOutBounce',  'easeInOutBounce'
 ];
 
-for (var i = 1; i <= 25; i++) {
+for (var i = 1; i <= 21; i++) {
   $("body").append(
     '<div class="w">' +
-    '  <canvas class="d1" id="d' + String(i) + '-1" height="400" width="400"></canvas>' +
+    '  <canvas class="d1" id="d' + String(i) + '-1" height="402" width="402"></canvas>' +
     '  <canvas class="d2" id="d' + String(i) + '-2" height="320" width="320"></canvas>' +
     '  <canvas class="d3" id="d' + String(i) + '-3" height="285" width="285"></canvas>' +
     '  <div class="center" id="center' + String(i) + '">' + String(i) + ',000yen</div>' +
     '</div>'
   );
 
+  var data1, data2, data3;
+  if (i % 3 == 1) {
+    data1 = doughnutData;
+    data2 = _.shuffle(doughnutData2);
+    data3 = _.shuffle(doughnutData3);
+  } else if (i % 3 == 2) {
+    data1 = doughnutData_y;
+    data2 = _.shuffle(doughnutData2);
+    data3 = _.shuffle(doughnutData3);
+  } else {
+    data1 = doughnutData_b;
+    data2 = _.shuffle(doughnutData2_b);
+    data3 = _.shuffle(doughnutData3_b);
+  }
+
   var ctx1 = $("#d" + String(i) + "-1").get(0).getContext("2d");
-  var myChart1 = new Chart(ctx1).Doughnut(doughnutData, {
+  var myChart1 = new Chart(ctx1).Doughnut(data1, {
     percentageInnerCutout: 80,
     segmentShowStroke: false,
     showTooltips: false,
-    animateScale: i % 2 == 0,
-    animateRotate: i % 2 != 0,
+    // animateScale: i % 2 == 0,
+    animateScale: true,
+    // animateRotate: i % 2 != 0,
+    animateRotate: false,
     animationEasing: 'easeOutExpo',
     animationSteps: 45,
     // animation: false
   });
 
   var ctx2 = $("#d" + String(i) + "-2").get(0).getContext("2d");
-  var myChart2 = new Chart(ctx2).Doughnut(doughnutData2, {
+  var myChart2 = new Chart(ctx2).Doughnut(data2, {
     percentageInnerCutout: 90,
     showTooltips: false,
     animation: false
   });
 
   var ctx3 = $("#d" + String(i) + "-3").get(0).getContext("2d");
-  var myChart3 = new Chart(ctx3).Doughnut(doughnutData3, {
+  var myChart3 = new Chart(ctx3).Doughnut(data3, {
     percentageInnerCutout: 90,
     showTooltips: false,
     animation: false
