@@ -1,7 +1,12 @@
 <html>
 <head>
+<meta charset="UTF-8">
 
 <style type="text/css">
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .w {
   position: relative;
   height: 400px;
@@ -24,19 +29,82 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .center {
-  font-size: 250%;
-  width: 250px;
-  height: 250px;
-  line-height: 250px;
+  width: 246px;
+  height: 246px;
+  line-height: 246px;
   text-align: center;
   background-color: #444;
   color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
+.center p {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.center p > span {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  left: 0px;
+  line-height: 1em;
+  font-size: 23px;
+}
+
+.line1 {
+  top: 50px;
+  font-weight: 100;
+}
+.line2 {
+  top: 92px;
+}
+.line2-nested {
+  font-size: 35px;
+  font-weight:bold;
+  border-bottom: 3px solid;
+  padding-bottom: 5px;
+  line-height: 1em;
+  width: 84%;
+  margin-left: -42%;
+}
+.line3 {
+  top: 155px;
+}
+.line4 {
+  top: 185px;
+}
+
 </style>
 
 </head>
 <body>
+
+<div class="w">
+  <canvas class="d1" height="400" width="400"></canvas>
+  <canvas class="d2" height="314" width="314"></canvas>
+  <canvas class="d3" height="280" width="280"></canvas>
+
+  <div class="center" style="
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  ">
+  <p style="">
+    <span class="line1">エイベGHD</span>
+    <span class="line2">
+      <span class="line2-nested">¥100,000</span>
+    </span>
+    <span class="line3">＋¥00,000</span>
+    <span class="line4">(＋00.00%)</span>
+  </p>
+  </div>
+</div>
 
 <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="./node_modules/underscore/underscore-min.js"></script>
@@ -179,15 +247,15 @@ var ease_opts = [
   'easeInBounce',   'easeOutBounce',  'easeInOutBounce'
 ];
 
+var base = $(".w").first();
+
 for (var i = 1; i <= 21; i++) {
-  $("body").append(
-    '<div class="w">' +
-    '  <canvas class="d1" id="d' + String(i) + '-1" height="402" width="402"></canvas>' +
-    '  <canvas class="d2" id="d' + String(i) + '-2" height="320" width="320"></canvas>' +
-    '  <canvas class="d3" id="d' + String(i) + '-3" height="285" width="285"></canvas>' +
-    '  <div class="center" id="center' + String(i) + '">' + String(i) + ',000yen</div>' +
-    '</div>'
-  );
+  var dom = base.clone();
+  $(".d1", dom).attr("id", 'd' + String(i) + '-1')
+  $(".d2", dom).attr("id", 'd' + String(i) + '-2')
+  $(".d3", dom).attr("id", 'd' + String(i) + '-3')
+  $(".center", dom).attr("id", 'center' + String(i))
+  $("body").append(dom);
 
   var data1, data2, data3;
   if (i % 3 == 1) {
@@ -205,6 +273,13 @@ for (var i = 1; i <= 21; i++) {
   }
 
   var ctx1 = $("#d" + String(i) + "-1").get(0).getContext("2d");
+
+  // Gradient
+  var gradient = ctx1.createLinearGradient(0, 0, 0, 50);
+  gradient.addColorStop("0.0", "white");
+  gradient.addColorStop("1.0", data1[0].color);
+  data1 = [{color: gradient, value: data1[0].value}];
+
   var myChart1 = new Chart(ctx1).Doughnut(data1, {
     percentageInnerCutout: 80,
     segmentShowStroke: false,
@@ -232,6 +307,8 @@ for (var i = 1; i <= 21; i++) {
     animation: false
   });
 };
+
+base.hide();
 
 </script>
 
